@@ -6,11 +6,6 @@ def calc_bytes(s):
 def calc_chars(s):
     e=eval(s)
     return len(e)
-    s = s.strip(' "')
-    s = re.sub(r"""\\x[a-f0-9]{2}""", '.', s)
-    s = s.replace(r'\"', r'.')
-    s = s.replace(r'\\', r'.')
-    return len(s)
 
 def show(s, e1, e2):
     a1 = calc_bytes(s)
@@ -19,7 +14,7 @@ def show(s, e1, e2):
 
 bs = cs = 0
 rc = 0
-for line in open('8.txt', 'r'):
+for line in open('08.txt', 'r'):
     line = line.strip()
     rc += len(line) - len(eval(line))
     #bs += calc_bytes(line)
