@@ -1,4 +1,7 @@
 from collections import namedtuple
+from itertools import product
+
+import itertools
 
 """
 Sprinkles: capacity 5, durability -1, flavor 0, texture 0, calories 5
@@ -26,28 +29,20 @@ INS_COUNT = len(ins)
 
 ret = 0
 cnt = [0, 0, 0, 0]
-for cnt[0] in range(101):
-    for cnt[1] in range(101):
-        if sum(cnt[:2])>100:
-            continue
-        for cnt[2] in range(101):
-            if sum(cnt[:3]) > 100:
-                continue
-            cnt[3] = 100 - sum(cnt[:3])
-            if cnt[3] < 0:
-                continue
-            total = 1
-            total_cal = sum(c * i[PROP_COUNT-1] for c, i in zip(cnt, ins))
-            if total_cal!=500:  # part b condition
-                continue        # part b condition
-            for prop_idx in range(PROP_COUNT-1):
-                prop_total = sum(c * i[prop_idx] for c, i in zip(cnt, ins))
-                prop_total = max(prop_total, 0)
-                total = total * prop_total
-            ret = max(total, ret)
+for cnt in itertools.product(range(101), range(101), range(101)):
+    if sum(cnt)>100:
+        continue
+    cnt = (*cnt, 100-sum(cnt))
+    total = 1
+    total_cal = sum(c * i[PROP_COUNT-1] for c, i in zip(cnt, ins))
+    if total_cal!=500:  # part b condition
+        continue        # part b condition
+    for prop_idx in range(PROP_COUNT-1):
+        prop_total = sum(c * i[prop_idx] for c, i in zip(cnt, ins))
+        prop_total = max(prop_total, 0)
+        total = total * prop_total
+    ret = max(total, ret)
 print(ret)
-
-170*50*72
 
 # 13882464
 # 5585580000
